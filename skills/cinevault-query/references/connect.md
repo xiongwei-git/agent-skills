@@ -4,9 +4,9 @@
 
 ## 准备
 
-本机测试地址已预置为 `http://127.0.0.1:18765/mcp`，在运行服务的同一台机器上只需普通 API Key，不再要求用户配置地址。远程用户才需要管理员提供普通 HTTPS `/mcp` 地址。目前没有公开申请渠道，提示“请向邀请你的管理员申请普通 API Key 和接入地址”。不编造联系人。管理员 Key 不可代替普通 Key。
+正式普通入口预置为 `https://cinevault.tedxiong.com/mcp`，用户只配置普通API Key，向邀请管理员申请即可，不要求填写地址。管理员Key不能代替普通Key；部署和反代是否开通须以实时连接校验为准。
 
-脚本仅使用 Python 3 标准库；Codex 配置还需要已有 codex CLI。查看 `python3 scripts/connect.py --help`。路径按已安装 Skill 目录展开，命令中的 SERVICE_URL 由实际服务地址替换。如果没有 Python/Codex CLI，说明缺少的运行条件，使用客户端原生配置界面，不擅自安装依赖。
+脚本仅使用 Python 3 标准库；Codex 配置还需要已有 codex CLI。查看 `python3 scripts/connect.py --help`。路径按已安装 Skill 目录展开，服务地址已经预置。如果没有 Python/Codex CLI，说明缺少的运行条件，使用客户端原生配置界面，不擅自安装依赖。
 
 ## Codex
 
@@ -16,7 +16,7 @@
 python3 /实际安装目录/cinevault-query/scripts/connect.py setup
 ```
 
-本机测试直接执行上述命令；远程接入在命令末尾追加 `--url SERVICE_URL`。脚本提示隐藏输入普通 API Key，先在线校验普通工具，再保存配置并注册 MCP。不要通过聊天、命令参数、环境打印或脚本源文件传入 Key。用户已有权限600的私密 Key 文件时，可追加 `--key-file /私密文件路径`，该文件仅包含 Key；由脚本读取，模型不读取文件内容。不要拿开发项目 .env 自动替代用户授权。
+正常使用直接执行上述命令，无需URL参数；仅本机研发测试追加 `--url http://127.0.0.1:18765/mcp`。脚本提示隐藏输入普通 API Key，先在线校验普通工具，再保存配置并注册 MCP。不要通过聊天、命令参数、环境打印或脚本源文件传入 Key。用户已有权限600的私密 Key 文件时，可追加 `--key-file /私密文件路径`，该文件仅包含 Key；由脚本读取，模型不读取文件内容。不要读取服务端 YAML、数据库或管理员凭据替代普通用户授权。
 
 脚本将 URL 与 Key 存于 `~/.config/cinevault/reader.json`（600），并注册 `cinevault-query` 本机 STDIO 桥接。配置不在 Skill 目录中，更新 Skill 不覆盖凭据。远程必须 HTTPS；仅本机环回允许 HTTP。重定向拒绝，避免泄露认证。脚本面向 CineVault 的 JSON HTTP 响应及有限 SSE 响应，不作为通用 MCP 代理。
 
@@ -27,3 +27,5 @@ python3 /实际安装目录/cinevault-query/scripts/connect.py setup
 ## 其他客户端
 
 提供服务地址、普通端点路径 /mcp 与 Bearer 认证要求。用户通过客户端秘密存储填写 API Key；不将 Key 放到 URL 或公开 Skill 中。Codex 的辅助脚本不适用于其他客户端；具体版本的配置位置需核对，不能宣称 OpenClaw/Hermes 已验证。
+
+普通用户Key由管理员申请并保存在服务端数据库，不需要写入服务端配置。客户端仍需首次保存自己的普通Key。Key默认有效期3个日历月、次数不限；到期或额度耗尽时向管理员申请维护，不借用管理员身份。首次部署没有作品和普通Key；连接成功后查询为空是正常业务结果。

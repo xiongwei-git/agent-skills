@@ -116,7 +116,7 @@ def serve():
 def main():
     parser=argparse.ArgumentParser()
     sub=parser.add_subparsers(dest='command',required=True)
-    p=sub.add_parser('setup');p.add_argument('--url',default='http://127.0.0.1:18765/mcp',help='Defaults to local CineVault test service');p.add_argument('--key-file')
+    p=sub.add_parser('setup');p.add_argument('--url',default='https://cinevault.tedxiong.com/mcp',help='CineVault service endpoint (preset)');p.add_argument('--key-file')
     sub.add_parser('check');sub.add_parser('serve');sub.add_parser('register')
     args=parser.parse_args()
     try:
