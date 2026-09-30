@@ -34,13 +34,15 @@ npx skills add xiongwei-git/agent-skills --skill cinevault-query -a codex
 
 ## CineVault 接入状态
 
-Skill 提供操作流程，不包含 MCP 服务端，不会自动部署服务或生成访问凭据。
+Skill 提供查询流程及首次接入引导。首次使用时提示配置普通 API Key，目录内的 Python 标准库脚本负责验证并注册 Codex 普通连接，不需另装安装器。服务端与访问资格由管理员提供。
 
 CineVault 当前为邀请使用，尚未提供公共 MCP 地址或公开申请渠道。已有授权的使用者需在客户端配置管理员提供的普通 MCP 地址及凭据后才能实际查询。普通端点路径为 `/mcp`；不要把其他机器上的 `127.0.0.1` 地址当成自己可访问的远程服务。
 
 凭据只保存在客户端支持的秘密存储或私密环境中，不写入 Skill、Git、URL、安装命令或聊天。此仓库不分发管理员 Skill、服务端源码、数据库或凭据。
 
-Skill 文件结构已经校验；安装器能识别目录不代表具体客户端的 MCP 连接与业务查询已验收。OpenClaw、Hermes 的实际接入兼容性仍待验证。
+首次接入详见 [连接说明](skills/cinevault-query/references/connect.md)。Key 在终端隐藏输入或从权限600的私密文件读取，不发到聊天中；配置存于用户本机 ~/.config/cinevault/reader.json（600）。配置后可能需要新开聊天加载工具。
+
+Skill 结构、辅助脚本的隔离连接/注册/只读调用/错误授权测试已经通过；具体用户的 MCP 连接与业务查询仍须验收。OpenClaw、Hermes 的实际接入兼容性仍待验证。
 
 ## 维护
 
